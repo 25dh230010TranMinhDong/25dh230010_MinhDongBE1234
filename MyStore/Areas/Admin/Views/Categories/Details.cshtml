@@ -1,0 +1,18 @@
+@model MyStore.Models.Category
+@{
+    ViewBag.Title = "Chi tiết danh mục";
+}
+
+<h3 class="page-title">Chi tiết danh mục</h3>
+
+<dl class="dl-horizontal">
+    <dt>Mã danh mục</dt>
+    <dd>@Html.DisplayFor(model => model.CategoryID)</dd>
+    <dt>Tên danh mục</dt>
+    <dd>@Html.DisplayFor(model => model.CategoryName)</dd>
+</dl>
+
+<p>
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.CategoryID }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-default" })
+</p>

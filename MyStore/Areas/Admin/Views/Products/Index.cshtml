@@ -1,0 +1,73 @@
+@using PagedList.Mvc
+@model MyStore.Models.ViewModel.ProductSearchVM
+@{
+    ViewBag.Title = "Sản phẩm";
+}
+
+<h3 class="page-title">Quản lý sản phẩm</h3>
+
+@using (Html.BeginForm("Index", "Products", FormMethod.Get, new { @class = "form-inline", style = "margin-bottom:15px" }))
+{
+    <div class="form-group">
+        <input type="text" name="searchTerm" value="@Model.SearchTerm" class="form-control" placeholder="Tên, mô tả, danh mục..." />
+    </div>
+    <div class="form-group">
+        <input type="number" name="minPrice" value="@Model.MinPrice" class="form-control" placeholder="Giá từ" min="0" step="any" />
+    </div>
+    <div class="form-group">
+        <input type="number" name="maxPrice" value="@Model.MaxPrice" class="form-control" placeholder="Giá đến" min="0" step="any" />
+    </div>
+    <div class="form-group">
+        <select name="sortOrder" class="form-control">
+            <option value="name_asc" @(Model.SortOrder == "name_asc" ? "selected" : "")>Tên A → Z</option>
+            <option value="name_desc" @(Model.SortOrder == "name_desc" ? "selected" : "")>Tên Z → A</option>
+            <option value="price_asc" @(Model.SortOrder == "price_asc" ? "selected" : "")>Giá tăng dần</option>
+            <option value="price_desc" @(Model.SortOrder == "price_desc" ? "selected" : "")>Giá giảm dần</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+    @Html.ActionLink("Đặt lại", "Index", null, new { @class = "btn btn-default" })
+}
+
+<p>
+    @Html.ActionLink("Thêm sản phẩm", "Create", null, new { @class = "btn btn-success" })
+</p>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Ảnh</th>
+            <th>Tên sản phẩm</th>
+            <th>Danh mục</th>
+            <th>Giá</th>
+            <th style="width:230px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td><img src="@Url.Content(item.ProductImage ?? "~/Content/images/default_img.png")" class="product-thumb" alt="@item.ProductName" /></td>
+                <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Category.CategoryName)</td>
+                <td>@item.ProductPrice.ToString("N0")</td>
+                <td>
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.ProductID }, new { @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("Chi tiết", "Details", new { id = item.ProductID }, new { @class = "btn btn-info btn-sm" })
+                    @Html.ActionLink("Xóa", "Delete", new { id = item.ProductID }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+Trang @(Model.Products.PageCount < Model.Products.PageNumber ? 0 : Model.Products.PageNumber) / @Model.Products.PageCount
+
+@Html.PagedListPager(Model.Products, page => Url.Action("Index", new
+{
+    page,
+    searchTerm = Model.SearchTerm,
+    minPrice = Model.MinPrice,
+    maxPrice = Model.MaxPrice,
+    sortOrder = Model.SortOrder
+}), PagedListRenderOptions.ClassicPlusFirstAndLast)

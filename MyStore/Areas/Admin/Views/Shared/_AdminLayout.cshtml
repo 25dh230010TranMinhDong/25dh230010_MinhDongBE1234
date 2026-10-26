@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - MyStore Admin</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        body { padding-top: 70px; }
+        .admin-header { background-color: #232f3e; }
+        .admin-header .navbar-brand, .admin-header .navbar-nav > li > a { color: #fff; }
+        .admin-header .navbar-nav > li > a:hover { background-color: #37475a; color: #febd69; }
+        .page-title { background-color: #37475a; color: #fff; padding: 10px 15px; margin-bottom: 15px; }
+        .table > thead > tr > th { background-color: #f0c14b; }
+        .product-thumb { width: 60px; height: 60px; object-fit: cover; }
+        footer { margin-top: 30px; padding: 15px 0; border-top: 1px solid #ddd; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top admin-header">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("MyStore Admin", "Index", "Home", new { area = "Admin" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Danh mục", "Index", "Categories", new { area = "Admin" }, null)</li>
+                    <li>@Html.ActionLink("Sản phẩm", "Index", "Products", new { area = "Admin" }, null)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <footer>
+            <p>&copy; @DateTime.Now.Year - MyStore Admin</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

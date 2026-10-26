@@ -1,0 +1,18 @@
+@model MyStore.Models.Product
+@{
+    ViewBag.Title = "Xóa sản phẩm";
+}
+
+<h3 class="page-title">Xóa sản phẩm</h3>
+<h4 class="text-danger">Bạn có chắc chắn muốn xóa sản phẩm này?</h4>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+@Html.Partial("_PVProductInfo", Model)
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <input type="submit" value="Xóa" class="btn btn-danger" />
+    @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-default" })
+}

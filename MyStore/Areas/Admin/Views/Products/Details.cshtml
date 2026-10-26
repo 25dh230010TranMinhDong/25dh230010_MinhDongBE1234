@@ -1,0 +1,13 @@
+@model MyStore.Models.Product
+@{
+    ViewBag.Title = "Chi tiết sản phẩm";
+}
+
+<h3 class="page-title">Chi tiết sản phẩm</h3>
+
+@Html.Partial("_PVProductInfo", Model)
+
+<p>
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.ProductID }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-default" })
+</p>

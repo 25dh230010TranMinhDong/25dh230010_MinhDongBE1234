@@ -1,0 +1,26 @@
+@model MyStore.Models.Product
+@{
+    ViewBag.Title = "Thêm sản phẩm";
+}
+
+<h3 class="page-title">Thêm sản phẩm</h3>
+
+@using (Html.BeginForm("Create", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Partial("_PVCreateEditProduct", Model)
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-6">
+                <input type="submit" value="Lưu" class="btn btn-success" />
+                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

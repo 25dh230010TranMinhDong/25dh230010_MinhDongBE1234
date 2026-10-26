@@ -1,0 +1,28 @@
+@model MyStore.Models.Product
+@{
+    ViewBag.Title = "Sửa sản phẩm";
+}
+
+<h3 class="page-title">Sửa sản phẩm</h3>
+
+@using (Html.BeginForm("Edit", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ProductID)
+    @Html.HiddenFor(model => model.ProductImage)
+
+    @Html.Partial("_PVCreateEditProduct", Model)
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-6">
+                <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
